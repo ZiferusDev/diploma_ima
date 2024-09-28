@@ -5,7 +5,7 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({baseUrl: 'https://logotipiwe.ru/ima/auth', headers: {
         "Content-Type": 'application/json'
-    }}),
+    },credentials: 'include'}),
     tagTypes: ['Auth'],
     endpoints: (builder) => ({
     getToken: builder.mutation<AuthToken, AuthCredentials>({

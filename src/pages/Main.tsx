@@ -1,18 +1,9 @@
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
-import { useGetTokenMutation } from '../store/services/auth';
 
 export const Main = () => {
-    const [_, tokenMutaion] = useGetTokenMutation();
-    useEffect(() => {
-        console.log('');
-        localStorage.setItem(
-            'expireDate',
-            String(tokenMutaion?.data?.expireDate),
-        );
-        localStorage.setItem('token', String(tokenMutaion?.data?.token));
-        document.cookie = `jwt=${tokenMutaion?.data?.token}`;
-    }, [tokenMutaion?.isSuccess]);
+    const navigate = useNavigate();
+    if (!document.cookie) navigate('/');
     return (
         <>
             <NavBar />

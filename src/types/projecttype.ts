@@ -5,4 +5,4 @@ export type Project = {
         projectId: string;
         userId: 1;
     }[] | null;
-}
+}[]
