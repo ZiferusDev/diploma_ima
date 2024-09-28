@@ -3,7 +3,7 @@ import { NavBar } from '../components/NavBar';
 
 export const Main = () => {
     const navigate = useNavigate();
-    if (!document.cookie) navigate('/');
+    if (!document.cookie) navigate('/login');
     return (
         <>
             <NavBar />
