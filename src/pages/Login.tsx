@@ -14,8 +14,8 @@ export const Login = () => {
     const [getToken, tokenMutaion] = useGetTokenMutation();
     const form = useForm<AuthCredentials>({
         defaultValues: {
-            email: 'admin',
-            password: 'admin',
+            email: '',
+            password: '',
         },
         validators: {
             onChange: ({ value }) => {

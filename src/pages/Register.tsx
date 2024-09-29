@@ -33,7 +33,7 @@ export const Register = () => {
                 align-items: center;
                 flex-direction: column;
                 gap: 32px;
-                margin-top: 144px;
+                margin-top: 44px;
             `}
         >
             <img src={registerImg} />
@@ -224,7 +224,7 @@ export const Register = () => {
                                 variant="contained"
                                 disabled={!canSubmit || regMutation.isLoading}
                             >
-                                Войти
+                                Зарегестрироваться
                             </Button>
                         )}
                     />
