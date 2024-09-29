@@ -8,6 +8,7 @@ import {
 } from '../store/services/tasks';
 import { useGetProjectsQuery } from '../store/services/project';
 import {
+    Button,
     Divider,
     IconButton,
     LinearProgress,
@@ -44,6 +45,8 @@ export const TasksTable = () => {
         isSuccess,
     } = useGetTasksByProjectQuery(projectId || '');
 
+    const [createMutation] = useCreateTaskMutation();
+
     return (
         <div
             className={css`
@@ -70,6 +73,28 @@ export const TasksTable = () => {
                                 );
                             })()}
                         </Typography>
+                        <Button
+                            onClick={() => {
+                                if (!projectId) return;
+                                createMutation({
+                                    id: projectId,
+                                    due: null,
+                                });
+                            }}
+                            variant="outlined"
+                            sx={{
+                                marginTop: '10px',
+                                marginBottom: '10px',
+                            }}
+                        >
+                            <Plus
+                                size={20}
+                                className={css`
+                                    margin-right: 10px;
+                                `}
+                            />{' '}
+                            Создать новую задачу
+                        </Button>
                     </div>
                     <div>
                         {(() => {

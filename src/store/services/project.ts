@@ -28,9 +28,9 @@ export const projectApi = createApi({
         ),
         addIntegration: builder.mutation<void, string>({
             query: (token) => ({
-                url: 'git/gitlab',
-                method: 'GET',
-                params: {token: token}
+                url: 'users/tokens',
+                method: 'POST',
+                params: {gitlabToken: token}
             })
         })
     })
