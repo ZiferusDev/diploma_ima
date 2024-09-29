@@ -24,6 +24,7 @@ import {
     CircleDashed,
     CircleDot,
     CircleUser,
+    Github,
     Gitlab,
     LoaderCircle,
     Pencil,
@@ -39,6 +40,7 @@ export const TasksTable = () => {
 
     const { data: projects } = useGetProjectsQuery();
 
+    const currProject = projects?.find(elem => elem.id === projectId);
     const {
         data: tasks,
         isFetching,
@@ -65,7 +67,29 @@ export const TasksTable = () => {
                         `}
                     >
                         <Typography color="primary" variant="h4">
-                            {'Проект: '}
+                            {currProject?.gitlabLink && (
+                                <IconButton
+                                    onClick={() => {
+                                        window.open(
+                                            currProject.gitlabLink || '',
+                                        );
+                                    }}
+                                >
+                                    <Gitlab color="#fc6d26" />
+                                </IconButton>
+                            )}
+                            {currProject?.githubLink && (
+                                <IconButton
+                                    onClick={() => {
+                                        window.open(
+                                            currProject.githubLink || '',
+                                        );
+                                    }}
+                                >
+                                    <Github color="#000" />
+                                </IconButton>
+                            )}
+                            {'  Проект: '}
                             {(() => {
                                 return (
                                     projects?.find(
