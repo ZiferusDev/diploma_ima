@@ -4,6 +4,7 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: 'ima-front',
   plugins: [react(),svgr({
     svgrOptions: {
       svgo: false,
