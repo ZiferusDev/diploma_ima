@@ -1,5 +1,8 @@
 import { css } from '@emotion/css';
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Button,
     ButtonGroup,
     CircularProgress,
@@ -10,7 +13,7 @@ import {
     Typography,
     useTheme,
 } from '@mui/material';
-import { CircleCheckBig, Inbox, User } from 'lucide-react';
+import { ArrowDown, CircleCheckBig, Inbox, Plus, User } from 'lucide-react';
 import Logo from '../assests/logo2.svg?react';
 import { useState } from 'react';
 import {
@@ -27,16 +30,29 @@ export const NavBar = () => {
 
     const buttons = [
         <Button
+            sx={{
+                textTransform: 'none',
+                paddingLeft: 0,
+            }}
             key="first"
             className={css`
                 display: flex;
                 gap: 5px;
             `}
         >
-            <Inbox size={20} />
+            <Inbox
+                size={16}
+                className={css`
+                    margin-left: -4px;
+                `}
+            />
             <Typography>Сообщения</Typography>
         </Button>,
         <Button
+            sx={{
+                textTransform: 'none',
+                paddingLeft: 0,
+            }}
             key="second"
             className={css`
                 display: flex;
@@ -44,7 +60,7 @@ export const NavBar = () => {
             `}
         >
             {' '}
-            <CircleCheckBig size={20} />
+            <CircleCheckBig size={16} />
             <Typography>Мои задачи</Typography>
         </Button>,
     ];
@@ -64,34 +80,32 @@ export const NavBar = () => {
                 className={css`
                     max-width: 400px;
                     border-right: solid 1px ${theme.palette.divider};
-                    height: 100vh;
+                    height: calc(100vh - 60px);
                     overflow: scroll;
                     overflow-y: scroll;
                     position: relative;
                 `}
             >
-                <ButtonGroup
-                    className={css`
-                        position: absolute;
-                        top: 140px;
-                        left: 230px;
-                    `}
-                    orientation="vertical"
-                    size="small"
-                    color="inherit"
-                    variant="text"
-                >
-                    {buttons}
-                </ButtonGroup>
                 <div
                     className={css`
-                        display: flex;
-                        padding-bottom: 20px;
+                        padding-left: 64px;
+                        padding-right: 64px;
+                        padding-top: 42px;
                     `}
                 >
-                    <Logo />
+                    <Typography variant="h5" color="primary" fontWeight={500}>
+                        Моё пространство
+                    </Typography>
+                    <ButtonGroup
+                        className={css``}
+                        orientation="vertical"
+                        size="small"
+                        color="inherit"
+                        variant="text"
+                    >
+                        {buttons}
+                    </ButtonGroup>
                 </div>
-                <Divider />
                 <div
                     className={css`
                         width: 80%;
@@ -102,134 +116,188 @@ export const NavBar = () => {
                     `}
                 >
                     <List>
-                        <Button
-                            onClick={() => {
-                                setProjectDialogOpened(true);
-                            }}
-                            variant="contained"
-                            sx={{
-                                marginBottom: '10px',
-                            }}
-                            color="secondary"
-                            disableElevation
+                        <div
+                            className={css`
+                                display: flex;
+                                width: 100%;
+                                justify-content: center;
+                            `}
                         >
-                            Создать проект
-                        </Button>
-
-                        {isFetching || isLoading ? (
-                            <CircularProgress />
-                        ) : (
-                            projects?.map((project, index) => {
-                                return (
-                                    <div key={project.id}>
-                                        <div
-                                            className={css`
-                                                border: 1px solid black;
-                                                border-radius: 12px;
-                                                padding: 5px;
-                                                display: flex;
-                                                align-items: center;
-                                                gap: 16px;
-                                            `}
-                                            key={project.id}
-                                        >
-                                            <div
+                            <Button
+                                onClick={() => {
+                                    setProjectDialogOpened(true);
+                                }}
+                                variant="outlined"
+                                sx={{
+                                    marginBottom: '10px',
+                                    textTransform: 'none',
+                                    padding: '4px 16px',
+                                    borderRadius: '12px',
+                                }}
+                                disableElevation
+                            >
+                                <Plus
+                                    className={css`
+                                        margin-right: 12px;
+                                    `}
+                                />
+                                Создать проект
+                            </Button>
+                        </div>
+                        <div
+                            className={css`
+                                display: flex;
+                                flex-direction: column;
+                                gap: 10px;
+                            `}
+                        >
+                            {isFetching || isLoading ? (
+                                <CircularProgress />
+                            ) : (
+                                projects?.map((project, index) => {
+                                    return (
+                                        <div key={project.id}>
+                                            <Accordion
+                                                elevation={0}
                                                 className={css`
-                                                    border-radius: 9999px;
-                                                    min-height: 40px;
-                                                    min-width: 40px;
-                                                    max-width: 40px;
-                                                    max-height: 40px;
-                                                    display: flex;
-                                                    justify-content: center;
-                                                    align-items: center;
-                                                    background-color: ${theme
-                                                        .palette.primary.light};
+                                                    border-bottom: 1px solid
+                                                        ${theme.palette.divider};
+                                                    padding: 5px;
                                                 `}
+                                                key={project.id}
                                             >
-                                                <Typography color="info">
-                                                    {index + 1}
-                                                </Typography>
-                                            </div>
-                                            <div>
-                                                <Typography variant="body1">{`Проект №${index + 1}`}</Typography>
-                                                <Typography
-                                                    color="gray"
-                                                    variant="subtitle2"
+                                                <AccordionSummary
+                                                    className={css`
+                                                        width: 100%;
+                                                    `}
+                                                    id={project.id}
+                                                    expandIcon={<ArrowDown />}
                                                 >
-                                                    {project.name}
-                                                </Typography>
-                                            </div>
+                                                    <div
+                                                        className={css`
+                                                            border-radius: 9999px;
+                                                            min-height: 40px;
+                                                            min-width: 40px;
+                                                            max-width: 40px;
+                                                            max-height: 40px;
+                                                            display: flex;
+                                                            justify-content: center;
+                                                            align-items: center;
+                                                            background-color: ${theme
+                                                                .palette.primary
+                                                                .light};
+                                                            margin-right: 12px;
+                                                        `}
+                                                    >
+                                                        <Typography color="#FFF">
+                                                            {index + 1}
+                                                        </Typography>
+                                                    </div>
+
+                                                    <div>
+                                                        <Typography variant="body1">{`Проект №${index + 1}`}</Typography>
+                                                        <Typography
+                                                            color="gray"
+                                                            variant="subtitle2"
+                                                        >
+                                                            {project.name}
+                                                        </Typography>
+                                                    </div>
+                                                </AccordionSummary>
+                                                <AccordionDetails>
+                                                    <List
+                                                        className={css`
+                                                            display: flex;
+                                                            flex-direction: column;
+                                                            align-items: end;
+                                                            gap: 10px;
+                                                        `}
+                                                    >
+                                                        <ListItemButton
+                                                            onClick={() => {}}
+                                                            sx={{
+                                                                backgroundColor:
+                                                                    theme
+                                                                        .palette
+                                                                        .primary
+                                                                        .main,
+                                                                borderRadius:
+                                                                    '12px',
+                                                                color: '#FFF',
+                                                                ':hover': {
+                                                                    bgcolor:
+                                                                        theme
+                                                                            .palette
+                                                                            .primary
+                                                                            .light,
+                                                                },
+                                                            }}
+                                                            className={css`
+                                                                display: flex;
+                                                                justify-content: start;
+                                                                background-color: ${theme
+                                                                    .palette
+                                                                    .primary
+                                                                    .main};
+                                                                width: 60%;
+                                                                border-radius: 12px;
+                                                                gap: 5px;
+                                                            `}
+                                                        >
+                                                            <User size={20} />
+                                                            <ListItemText
+                                                                primary={
+                                                                    'Участники'
+                                                                }
+                                                            />
+                                                        </ListItemButton>
+                                                        <ListItemButton
+                                                            sx={{
+                                                                backgroundColor:
+                                                                    theme
+                                                                        .palette
+                                                                        .primary
+                                                                        .main,
+                                                                borderRadius:
+                                                                    '12px',
+                                                                color: '#FFF',
+                                                                ':hover': {
+                                                                    bgcolor:
+                                                                        theme
+                                                                            .palette
+                                                                            .primary
+                                                                            .light,
+                                                                },
+                                                            }}
+                                                            className={css`
+                                                                display: flex;
+                                                                justify-content: start;
+                                                                background-color: ${theme
+                                                                    .palette
+                                                                    .primary
+                                                                    .main};
+                                                                width: 60%;
+                                                                border-radius: 12px;
+                                                                gap: 5px;
+                                                            `}
+                                                        >
+                                                            <CircleCheckBig
+                                                                size={20}
+                                                            />
+                                                            <ListItemText
+                                                                primary={
+                                                                    'Задачи'
+                                                                }
+                                                            />
+                                                        </ListItemButton>
+                                                    </List>
+                                                </AccordionDetails>
+                                            </Accordion>
                                         </div>
-                                        <List
-                                            className={css`
-                                                display: flex;
-                                                flex-direction: column;
-                                                align-items: end;
-                                                gap: 10px;
-                                            `}
-                                        >
-                                            <ListItemButton
-                                                sx={{
-                                                    backgroundColor:
-                                                        theme.palette.primary
-                                                            .main,
-                                                    borderRadius: '12px',
-                                                    color: '#FFF',
-                                                    ':hover': {
-                                                        bgcolor:
-                                                            theme.palette
-                                                                .primary.light,
-                                                    },
-                                                }}
-                                                className={css`
-                                                    display: flex;
-                                                    justify-content: start;
-                                                    background-color: ${theme
-                                                        .palette.primary.main};
-                                                    width: 60%;
-                                                    border-radius: 12px;
-                                                    gap: 5px;
-                                                `}
-                                            >
-                                                <User size={20} />
-                                                <ListItemText
-                                                    primary={'Участники'}
-                                                />
-                                            </ListItemButton>
-                                            <ListItemButton
-                                                sx={{
-                                                    backgroundColor:
-                                                        theme.palette.primary
-                                                            .main,
-                                                    borderRadius: '12px',
-                                                    color: '#FFF',
-                                                    ':hover': {
-                                                        bgcolor:
-                                                            theme.palette
-                                                                .primary.light,
-                                                    },
-                                                }}
-                                                className={css`
-                                                    display: flex;
-                                                    justify-content: start;
-                                                    background-color: ${theme
-                                                        .palette.primary.main};
-                                                    width: 60%;
-                                                    border-radius: 12px;
-                                                    gap: 5px;
-                                                `}
-                                            >
-                                                <CircleCheckBig size={20} />
-                                                <ListItemText
-                                                    primary={'Задачи'}
-                                                />
-                                            </ListItemButton>
-                                        </List>
-                                    </div>
-                                );
-                            })
-                        )}
+                                    );
+                                })
+                            )}
+                        </div>
                     </List>
                 </div>
             </div>

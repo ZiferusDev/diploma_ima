@@ -11,9 +11,18 @@ import { store } from './store/store';
 import { ErrorPage } from './pages/Error';
 import { Main } from './pages/Main';
 import './index.css';
+import { UsersTable } from './components/UsersTable';
+import { TasksTable } from './components/TasksTable';
 
 const router = createBrowserRouter([
-    { path: '/', element: <Main /> },
+    {
+        path: '/',
+        element: <Main />,
+        children: [
+            { path: 'users', element: <UsersTable /> },
+            { path: 'tasks', element: <TasksTable /> },
+        ],
+    },
     { path: '/login', element: <Login /> },
     { path: '/register', element: <Register /> },
     { path: '/*', element: <ErrorPage /> },
