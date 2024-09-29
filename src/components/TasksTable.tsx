@@ -12,6 +12,7 @@ import {
     IconButton,
     LinearProgress,
     TextField,
+    Tooltip,
     Typography,
 } from '@mui/material';
 import { Task } from '../types/tasktype';
@@ -54,14 +55,22 @@ export const TasksTable = () => {
                 <LinearProgress />
             ) : (
                 <>
-                    <Typography color="primary" variant="h4">
-                        {(() => {
-                            return (
-                                projects?.find(elem => elem.id === projectId)
-                                    ?.name || 'Имя проекта не найдено'
-                            );
-                        })()}
-                    </Typography>
+                    <div
+                        className={css`
+                            margin: 16px;
+                        `}
+                    >
+                        <Typography color="primary" variant="h4">
+                            {'Проект: '}
+                            {(() => {
+                                return (
+                                    projects?.find(
+                                        elem => elem.id === projectId,
+                                    )?.name || 'Имя проекта не найдено'
+                                );
+                            })()}
+                        </Typography>
+                    </div>
                     <div>
                         {(() => {
                             console.log(tasks);
@@ -437,7 +446,9 @@ const TaskBody = ({
                     gap: 5px;
                 `}
             >
-                <CircleUser size={16} color="#757575" />
+                <Tooltip title={'Никто не взял задачу'}>
+                    <CircleUser size={16} color="#757575" />
+                </Tooltip>
                 <IconButton
                     onClick={() => {
                         deleteTaskMutation(task.id);

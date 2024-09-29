@@ -3,7 +3,7 @@ import { Project } from "../../types/projecttype";
 
 export const projectApi = createApi({
     reducerPath: 'projectApi',
-    baseQuery: fetchBaseQuery({baseUrl: 'https://logotipiwe.ru/ima/api/projects',headers: {
+    baseQuery: fetchBaseQuery({baseUrl: 'https://logotipiwe.ru/ima/api/',headers: {
         'content-type': 'application/json',
     }, credentials: 'include'}),
     tagTypes: ['Projects'],
@@ -11,7 +11,7 @@ export const projectApi = createApi({
         createProject: builder.mutation<Project, string>(
             {
                 query: (name) => ({
-                    url: '',
+                    url: 'projects',
                     method: 'POST',
                     body: JSON.stringify({name: name}),
                 }),
@@ -21,13 +21,20 @@ export const projectApi = createApi({
         getProjects: builder.query<Project, void>(
             {
                 query: () => ({
-                    url: ''
+                    url: 'projects'
                 }),
                 providesTags: ['Projects']
             }
         ),
+        addIntegration: builder.mutation<void, string>({
+            query: (token) => ({
+                url: 'git/gitlab',
+                method: 'GET',
+                params: {token: token}
+            })
+        })
     })
 
 })
 
-export const {useCreateProjectMutation, useGetProjectsQuery} = projectApi
+export const {useCreateProjectMutation, useGetProjectsQuery, useAddIntegrationMutation} = projectApi

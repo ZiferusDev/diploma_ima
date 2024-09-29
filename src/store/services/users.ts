@@ -13,7 +13,13 @@ export const usersApi = createApi({
                 url: 'api/users',
                 method: 'GET'
             })
+        }),
+        getCurrentUser: builder.query<User,void>({
+            query:() => ({
+                url: 'api/users/me',
+                method: 'GET'
+            })
         })
     })
 })
-export const {useGetUsersQuery} = usersApi
+export const {useGetUsersQuery, useGetCurrentUserQuery} = usersApi

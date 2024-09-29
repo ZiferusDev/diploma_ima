@@ -6,13 +6,21 @@ import {
     Button,
     ButtonGroup,
     CircularProgress,
+    IconButton,
     List,
     ListItemButton,
     ListItemText,
     Typography,
     useTheme,
 } from '@mui/material';
-import { ArrowDown, CircleCheckBig, Inbox, Plus, User } from 'lucide-react';
+import {
+    ArrowDown,
+    CircleCheckBig,
+    GitlabIcon,
+    Inbox,
+    Plus,
+    User,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
 import {
     useCreateProjectMutation,
@@ -20,6 +28,7 @@ import {
 } from '../store/services/project';
 import { ProjectDialog } from './ProjectDialog';
 import { useNavigate } from 'react-router-dom';
+import { IntegrationDialog } from './IntegrationDialog';
 
 export const NavBar = () => {
     const navigate = useNavigate();
@@ -27,6 +36,7 @@ export const NavBar = () => {
     const [_, data] = useCreateProjectMutation();
     const [isProjectDialogOpened, setProjectDialogOpened] =
         useState<boolean>(false);
+    const [isGitDialog, setGitDialog] = useState(false);
 
     const buttons = [
         <Button
@@ -69,6 +79,12 @@ export const NavBar = () => {
 
     return (
         <div>
+            <IntegrationDialog
+                isOpened={isGitDialog}
+                onClose={() => {
+                    setGitDialog(false);
+                }}
+            />
             <ProjectDialog
                 isOpened={isProjectDialogOpened}
                 onClose={() => {
@@ -122,8 +138,21 @@ export const NavBar = () => {
                                 display: flex;
                                 width: 100%;
                                 justify-content: center;
+                                align-items: center;
+                                gap: 5px;
                             `}
                         >
+                            <IconButton
+                                onClick={() => {
+                                    setGitDialog(true);
+                                }}
+                                sx={{
+                                    marginBottom: '10px',
+                                    border: `1px solid ${theme.palette.primary.main}`,
+                                }}
+                            >
+                                <GitlabIcon color="#fc6d26" size={16} />
+                            </IconButton>
                             <Button
                                 onClick={() => {
                                     setProjectDialogOpened(true);
@@ -217,7 +246,7 @@ export const NavBar = () => {
                                                         <ListItemButton
                                                             onClick={() => {
                                                                 navigate(
-                                                                    'users',
+                                                                    `users?projectid=${project.id}`,
                                                                 );
                                                             }}
                                                             sx={{

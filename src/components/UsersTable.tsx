@@ -1,8 +1,8 @@
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useGetUsersQuery } from '../store/services/users';
-import { Box, LinearProgress, Typography } from '@mui/material';
+import { Box, Button, LinearProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { ShieldCheck, ShieldX } from 'lucide-react';
+import { Plus, ShieldCheck, ShieldX } from 'lucide-react';
 import { css } from '@emotion/css';
 import { useNavigate } from 'react-router-dom';
 
@@ -80,6 +80,15 @@ export const UsersTable = () => {
             <Typography variant="h5" color="primary" fontWeight={500}>
                 Участники
             </Typography>
+            <Button variant="outlined">
+                <Plus
+                    size={20}
+                    className={css`
+                        margin-right: 10px;
+                    `}
+                />
+                Добавить участников
+            </Button>
             {isFetching || isLoading ? (
                 <LinearProgress />
             ) : rows.length ? (
