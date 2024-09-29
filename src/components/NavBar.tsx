@@ -13,7 +13,7 @@ import {
     useTheme,
 } from '@mui/material';
 import { ArrowDown, CircleCheckBig, Inbox, Plus, User } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     useCreateProjectMutation,
     useGetProjectsQuery,

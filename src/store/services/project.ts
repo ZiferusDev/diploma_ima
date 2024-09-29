@@ -6,6 +6,7 @@ export const projectApi = createApi({
     baseQuery: fetchBaseQuery({baseUrl: 'https://logotipiwe.ru/ima/api/projects',headers: {
         'content-type': 'application/json',
     }, credentials: 'include'}),
+    tagTypes: ['Projects'],
     endpoints: (builder) => ({
         createProject: builder.mutation<Project, string>(
             {
@@ -13,16 +14,18 @@ export const projectApi = createApi({
                     url: '',
                     method: 'POST',
                     body: JSON.stringify({name: name}),
-                })
+                }),
+                invalidatesTags: ['Projects']
             }
           ),
         getProjects: builder.query<Project, void>(
             {
                 query: () => ({
                     url: ''
-                })
+                }),
+                providesTags: ['Projects']
             }
-        )
+        ),
     })
 
 })

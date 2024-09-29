@@ -7,15 +7,17 @@ export const tasksApi = createApi({
     baseQuery: fetchBaseQuery({baseUrl: 'https://logotipiwe.ru/ima/api/',headers: {
         'content-type': 'application/json',
     }, credentials: 'include' }),
+    tagTypes: ['Task'],
     endpoints: (builder) => ({
         getTasksByProject: builder.query<Task[], string>({
             query: (id) => ({
                 url: `projects/${id}/tasks`,
                 method: 'GET',
 
-            })
+            }),
+            providesTags: ['Task']
         }),
-        createTask: builder.mutation<Task, {id: string; due: string}>({
+        createTask: builder.mutation<Task, {id: string; due: string | null}>({
             query: (data) => ({
                 url: 'tasks',
                 method: 'POST',
@@ -23,7 +25,8 @@ export const tasksApi = createApi({
                     projectId: data.id,
                     due: data.due
                 })
-            })
+            }),
+            invalidatesTags: ['Task']
         }),
         updateTask: builder.mutation<Task, Partial<Task>>({
             query: (data) => ({
@@ -31,15 +34,17 @@ export const tasksApi = createApi({
                 method: 'PUT',
                 body: JSON.stringify({...data})
             }
-            )
+            ),
+            invalidatesTags: ['Task']
         }),
-        deleteTask: builder.query<void, string>({
+        deleteTask: builder.mutation<void, string>({
             query: (id) => ({
                 url: `tasks/${id}`,
                 method: 'DELETE'
-            })
+            }),
+            invalidatesTags: ['Task']
         })
     })
 })
 
-export const {useGetTasksByProjectQuery, useCreateTaskMutation, useDeleteTaskQuery, useUpdateTaskMutation} = tasksApi;
+export const {useGetTasksByProjectQuery, useCreateTaskMutation, useDeleteTaskMutation, useUpdateTaskMutation} = tasksApi;
