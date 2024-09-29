@@ -5,10 +5,11 @@ import { useGetTokenMutation } from '../store/services/auth';
 import { AuthCredentials } from '../types/authtype';
 import loginImg from '../assests/login.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 export const Login = () => {
     const navigate = useNavigate();
+
+    if (document.cookie) navigate('/');
 
     const [getToken, tokenMutaion] = useGetTokenMutation();
     const form = useForm<AuthCredentials>({

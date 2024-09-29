@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import {
     useCreateTaskMutation,
@@ -24,6 +24,7 @@ import {
     CircleDashed,
     CircleDot,
     CircleUser,
+    Gitlab,
     LoaderCircle,
     Pencil,
     Plus,
@@ -471,6 +472,18 @@ const TaskBody = ({
                     gap: 5px;
                 `}
             >
+                {task.gitlabLink && (
+                    <Tooltip title={'Ссылка на GitLab'}>
+                        <Gitlab
+                            size={16}
+                            color="#757575"
+                            onClick={() => {
+                                window.open(task.gitlabLink);
+                            }}
+                        />
+                    </Tooltip>
+                )}
+
                 <Tooltip title={'Никто не взял задачу'}>
                     <CircleUser size={16} color="#757575" />
                 </Tooltip>

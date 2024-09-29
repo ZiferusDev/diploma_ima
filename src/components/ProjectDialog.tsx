@@ -23,7 +23,7 @@ export const ProjectDialog = ({
     const inputRef = useRef<HTMLInputElement>(null);
     const [createProject, _] = useCreateProjectMutation();
     const { data: users, isFetching, isLoading } = useGetUsersQuery();
-    const [selected, setSelected] = useState<string[]>([]);
+    const [selected, _a] = useState<string[]>([]);
 
     return (
         <Dialog open={isOpened} onClose={onClose}>

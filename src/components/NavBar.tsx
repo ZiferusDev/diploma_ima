@@ -21,7 +21,7 @@ import {
     Plus,
     User,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
     useCreateProjectMutation,
     useGetProjectsQuery,

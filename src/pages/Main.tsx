@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
 import { Header } from '../components/Header';
 import { css } from '@emotion/css';

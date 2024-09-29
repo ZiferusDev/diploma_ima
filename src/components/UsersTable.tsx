@@ -4,7 +4,6 @@ import { Box, Button, LinearProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Plus, ShieldCheck, ShieldX } from 'lucide-react';
 import { css } from '@emotion/css';
-import { useNavigate } from 'react-router-dom';
 
 export const UsersTable = () => {
     // const navigate = useNavigate();

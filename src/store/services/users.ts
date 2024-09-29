@@ -7,6 +7,7 @@ export const usersApi = createApi({
     baseQuery: fetchBaseQuery({baseUrl: 'https://logotipiwe.ru/ima/', headers: {
         "Content-Type": 'application/json'
     },credentials: 'include'}),
+    tagTypes: ['User'],
     endpoints: (builder) => ({
         getUsers: builder.query<User[],void>( {
             query:() => ({
@@ -18,7 +19,8 @@ export const usersApi = createApi({
             query:() => ({
                 url: 'api/users/me',
                 method: 'GET'
-            })
+            }),
+            providesTags: ['User']
         })
     })
 })

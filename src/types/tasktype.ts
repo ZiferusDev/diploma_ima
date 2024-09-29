@@ -6,4 +6,7 @@ export type Task = {
     status: 'OPEN' | 'IN_ANALYSIS' | 'IN_PROGRESS' | 'IN_TESTING' | 'DONE';
     creator: number;
     assignee: number | null;
+    gitlabId?: number;
+    gitlabLink?: string;
+    githubLink?: string;
 }

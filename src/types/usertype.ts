@@ -11,4 +11,6 @@ export type User = {
         accountNonExpired: boolean;
         accountNonLocked: boolean;
         credentialsNonExpired: boolean;
+        gitlabToken?: string;
+        githubToken?: string;
 } 

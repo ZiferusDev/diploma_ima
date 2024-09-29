@@ -6,7 +6,7 @@ export const projectApi = createApi({
     baseQuery: fetchBaseQuery({baseUrl: 'https://logotipiwe.ru/ima/api/',headers: {
         'content-type': 'application/json',
     }, credentials: 'include'}),
-    tagTypes: ['Projects'],
+    tagTypes: ['Projects','User'],
     endpoints: (builder) => ({
         createProject: builder.mutation<Project, string>(
             {
@@ -26,15 +26,29 @@ export const projectApi = createApi({
                 providesTags: ['Projects']
             }
         ),
-        addIntegration: builder.mutation<void, string>({
-            query: (token) => ({
+        addIntegration: builder.mutation<void, {lab?: string, hub?: string}>({
+            query: (data) => ({
                 url: 'users/tokens',
                 method: 'POST',
-                params: {gitlabToken: token}
-            })
-        })
+                params: {
+                    gitlabToken: data.lab,
+                    githubToken: data.hub
+                }
+            }),
+            invalidatesTags: ['User']
+        }),
+        importProjects: builder.mutation<void, void>(
+            {
+                query: () => ({
+                    url: '/git/gitlab',
+                    method: 'GET'
+                }),
+                invalidatesTags: ['Projects']
+            }
+        ),
+        
     })
 
 })
 
-export const {useCreateProjectMutation, useGetProjectsQuery, useAddIntegrationMutation} = projectApi
+export const {useCreateProjectMutation, useGetProjectsQuery, useAddIntegrationMutation, useImportProjectsMutation} = projectApi
