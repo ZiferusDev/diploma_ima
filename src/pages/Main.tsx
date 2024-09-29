@@ -4,8 +4,6 @@ import { Header } from '../components/Header';
 import { css } from '@emotion/css';
 
 export const Main = () => {
-    const navigate = useNavigate();
-    if (!document.cookie) navigate('/login');
     return (
         <>
             <Header />
@@ -13,7 +11,7 @@ export const Main = () => {
                 className={css`
                     display: flex;
                     width: 100%;
-                    min-height: calc(100vw - 60px);
+                    max-height: calc(100vw - 60px);
                 `}
             >
                 <NavBar />

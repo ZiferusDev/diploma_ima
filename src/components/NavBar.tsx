@@ -6,7 +6,6 @@ import {
     Button,
     ButtonGroup,
     CircularProgress,
-    Divider,
     List,
     ListItemButton,
     ListItemText,
@@ -14,15 +13,16 @@ import {
     useTheme,
 } from '@mui/material';
 import { ArrowDown, CircleCheckBig, Inbox, Plus, User } from 'lucide-react';
-import Logo from '../assests/logo2.svg?react';
 import { useState } from 'react';
 import {
     useCreateProjectMutation,
     useGetProjectsQuery,
 } from '../store/services/project';
 import { ProjectDialog } from './ProjectDialog';
+import { useNavigate } from 'react-router-dom';
 
 export const NavBar = () => {
+    const navigate = useNavigate();
     const theme = useTheme();
     const [_, data] = useCreateProjectMutation();
     const [isProjectDialogOpened, setProjectDialogOpened] =
@@ -79,6 +79,7 @@ export const NavBar = () => {
             <div
                 className={css`
                     max-width: 400px;
+                    min-width: 400px;
                     border-right: solid 1px ${theme.palette.divider};
                     height: calc(100vh - 60px);
                     overflow: scroll;
@@ -214,7 +215,11 @@ export const NavBar = () => {
                                                         `}
                                                     >
                                                         <ListItemButton
-                                                            onClick={() => {}}
+                                                            onClick={() => {
+                                                                navigate(
+                                                                    'users',
+                                                                );
+                                                            }}
                                                             sx={{
                                                                 backgroundColor:
                                                                     theme
@@ -252,6 +257,11 @@ export const NavBar = () => {
                                                             />
                                                         </ListItemButton>
                                                         <ListItemButton
+                                                            onClick={() => {
+                                                                navigate(
+                                                                    `tasks?projectid=${project.id}`,
+                                                                );
+                                                            }}
                                                             sx={{
                                                                 backgroundColor:
                                                                     theme

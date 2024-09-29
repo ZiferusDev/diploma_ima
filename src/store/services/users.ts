@@ -11,6 +11,7 @@ export const usersApi = createApi({
         getUsers: builder.query<User[],void>( {
             query:() => ({
                 url: 'api/users',
+                method: 'GET'
             })
         })
     })

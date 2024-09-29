@@ -1,11 +1,14 @@
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useGetUsersQuery } from '../store/services/users';
 import { Box, LinearProgress, Typography } from '@mui/material';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ShieldCheck, ShieldX } from 'lucide-react';
 import { css } from '@emotion/css';
+import { useNavigate } from 'react-router-dom';
 
 export const UsersTable = () => {
+    // const navigate = useNavigate();
+    // if (!document.cookie) navigate('/login');
     const {
         data: users,
         isFetching,
